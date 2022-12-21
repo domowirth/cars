@@ -66,7 +66,7 @@ void loop() {
     M5.shutdown();
   } else if (M5.BtnC.wasPressed()) {
     out("C", BLUE, true);
-    vibrate();
+    showStatus();
   }
 }
 
@@ -112,8 +112,8 @@ void doWebSocketServer() {
   delay(ONE_SECOND);
 }
 
-void vibrate() {
-  M5.Spk.begin();  // Initialize the speaker.  初始化扬声器
+void showStatus() {
+  M5.Spk.begin();
   M5.Spk.DingDong();
 
   M5.Lcd.print("Battery: ");
