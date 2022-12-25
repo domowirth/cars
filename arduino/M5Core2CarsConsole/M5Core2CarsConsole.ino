@@ -30,13 +30,13 @@ float yaw = 0.0F;
 void setup() {
   M5.begin();
   M5.Axp.SetLed(0);
-
   M5.IMU.Init();
 
-  wifiMulti.addAP(WLAN_SSID, WLAN_PASSWORD);
   M5.Lcd.setCursor(0, 0);
   M5.Lcd.setTextColor(ORANGE);
+  showBatteryStatus();
   M5.Lcd.print("Connecting to W-LAN...");
+  wifiMulti.addAP(WLAN_SSID, WLAN_PASSWORD);
   for (int i = 0; i < MAX_RETRIES && wifiMulti.run() != WL_CONNECTED; i++) {
     M5.Lcd.print(".");
     delay(ONE_SECOND);
@@ -58,21 +58,23 @@ void setup() {
 void loop() {
   M5.update();
   if (M5.BtnA.wasPressed()) {
-    out("A", BLUE, true);
+    out("A> ", BLUE, false);
     doWebSocketServer();
     out("Done.", RED, true);
   } else if (M5.BtnB.wasPressed()) {
-    out("B", BLUE, true);
+    out("B> ", BLUE, false);
+    out("Going down...", RED, true);
+    delay(1000);
     M5.shutdown();
   } else if (M5.BtnC.wasPressed()) {
-    out("C", BLUE, true);
+    out("C> ", BLUE, false);
     showStatus();
   }
 }
 
 void doWebSocketServer() {
   out(WiFi.localIP().toString(), WHITE, false);
-  M5.Lcd.println(" waiting for incoming connection...");
+  M5.Lcd.println(" waiting for incoming request...");
   WebsocketsClient client = server.accept();
   out("Got one.", GREEN, true);
   if (client.available()) {
@@ -82,7 +84,7 @@ void doWebSocketServer() {
       while (!done) {
         M5.update();
         if (M5.BtnB.wasPressed()) {
-          out("B", BLUE, true);
+          out("B> ", BLUE, false);
           done = true;
         }
         M5.IMU.getAhrsData(&pitch, &roll, &yaw);
@@ -116,18 +118,22 @@ void showStatus() {
   M5.Spk.begin();
   M5.Spk.DingDong();
 
-  M5.Lcd.print("Battery: ");
-  M5.Lcd.print(M5.Axp.GetBatteryLevel());
-  M5.Lcd.println("%");
+  showBatteryStatus();
 
   for (int i = 0; i < 3; i++) {
     M5.Axp.SetLDOEnable(3, true);
     M5.Axp.SetLed(1);
-    delay(200);
+    delay(100);
     M5.Axp.SetLDOEnable(3, false);
     M5.Axp.SetLed(0);
-    delay(200);
+    delay(100);
   }
+}
+
+void showBatteryStatus() {
+  M5.Lcd.print("Battery: ");
+  M5.Lcd.print(M5.Axp.GetBatteryLevel());
+  M5.Lcd.println("%");
 }
 
 void out(String s, uint16_t color, bool newLine) {
