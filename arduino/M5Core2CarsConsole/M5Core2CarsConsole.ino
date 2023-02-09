@@ -10,8 +10,8 @@
 #include <WiFi.h>
 #include <WiFiMulti.h>
 
-#define WLAN_SSID "ssid"
-#define WLAN_PASSWORD "password"
+#define WLAN_SSID "Domos Zweites Funknetz"
+#define WLAN_PASSWORD "wirsindamende"
 #define PORT 80
 #define MAX_RETRIES 15
 #define ONE_SECOND 1000
@@ -50,24 +50,26 @@ void setup() {
   } else {
     out("No.", RED, true);
   }
-  out("\nA: Wait for connection", BLUE, true);
-  out("B: Power Off", BLUE, true);
-  out("C: Status\n", BLUE, true);
+  out("\nA: Wait for connection", CYAN, true);
+  out("B: Power Off", CYAN, true);
+  out("C: Status\n", CYAN, true);
 }
 
 void loop() {
   M5.update();
   if (M5.BtnA.wasPressed()) {
-    out("A> ", BLUE, false);
+    out("A> ", CYAN, false);
     doWebSocketServer();
     out("Done.", RED, true);
   } else if (M5.BtnB.wasPressed()) {
-    out("B> ", BLUE, false);
+    out("B> ", CYAN, false);
     out("Going down...", RED, true);
     delay(1000);
     M5.shutdown();
   } else if (M5.BtnC.wasPressed()) {
-    out("C> ", BLUE, false);
+    M5.Lcd.clear();
+    M5.Lcd.setCursor(0, 0);
+    out("C> ", CYAN, false);
     showStatus();
   }
 }
@@ -79,12 +81,14 @@ void doWebSocketServer() {
   out("Got one.", GREEN, true);
   if (client.available()) {
     WebsocketsMessage msg = client.readBlocking();
-    if (msg.data().equals("myFord")) {
+    String message = msg.data();
+    out(message, BLUE, true);
+    if (message.startsWith("my")) {
       int pushes = -1;
       while (!done) {
         M5.update();
         if (M5.BtnB.wasPressed()) {
-          out("B> ", BLUE, false);
+          out("B> ", CYAN, false);
           done = true;
         }
         M5.IMU.getAhrsData(&pitch, &roll, &yaw);
