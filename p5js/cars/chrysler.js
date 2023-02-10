@@ -8,11 +8,12 @@ class Chrysler extends Automobile {
 
     paint() {
         push();
-        //scale(2);
         translate(this.location.x, this.location.y);
         rotate(this.direction.heading());
         rotate(PI/2);
+        fill(196, 222, 222);
         this.paintBody();
+        fill(255, 255, 255);
         this.paintFrontWheels();
         this.paintBackWheels();
         pop();
@@ -20,31 +21,31 @@ class Chrysler extends Automobile {
 
     paintBody() {
         beginShape();
-        vertex(-5, -20);
-        vertex(5, -20);
-        vertex(5, -16);
-        vertex(15, -16);
-        vertex(15, -14);
-        vertex(5, -14);
-        vertex(5, -10);
-        vertex(10, -6);
-        vertex(10, 16);
-        vertex(5, 18);
+        curveVertex(-5, -22);
+        curveVertex(0, -23);
+        curveVertex(5, -22);
+        curveVertex(5, -16);
+        curveVertex(15, -16);
+        curveVertex(15, -14);
+        curveVertex(5, -14);
+        curveVertex(5, -10);
+        curveVertex(10, -6);
+        curveVertex(10, 16);
+        curveVertex(5, 18);
 
-        vertex(3, 18);
-        vertex(3, 20);
-        vertex(-3, 20);
-        vertex(-3, 18);
+        curveVertex(3, 18);
+        curveVertex(3, 20);
+        curveVertex(-3, 20);
+        curveVertex(-3, 18);
 
-        vertex(-5, 18);
-        vertex(-10, 16);
-        vertex(-10, -6);
-        vertex(-5, -10);
-        vertex(-5, -14);
-        vertex(-15, -14);
-        vertex(-15, -16);
-        vertex(-5, -16);
-        vertex(-5, -20);
+        curveVertex(-5, 18);
+        curveVertex(-10, 16);
+        curveVertex(-10, -6);
+        curveVertex(-5, -10);
+        curveVertex(-5, -14);
+        curveVertex(-15, -14);
+        curveVertex(-15, -16);
+        curveVertex(-5, -16);
         endShape(CLOSE);
     }
 

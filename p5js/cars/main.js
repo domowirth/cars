@@ -6,7 +6,7 @@ function setup() {
     //canvas.parent('sketchContainer');
     car = new Chrysler();
     car.location.x = width / 10;
-    car.location.y = height / 2;
+    car.location.y = 100;
     oldPushButtonState = 4096;
 
     createWebSocket();
@@ -40,7 +40,7 @@ function createWebSocket() {
 }
 
 function draw() {
-    background(color(128));
+    background(226, 224, 204);
     car.update();
     car.paint();
 }
