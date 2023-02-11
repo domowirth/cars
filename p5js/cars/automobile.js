@@ -6,8 +6,8 @@ class Automobile {
         this.direction = createVector(0, 0)
         this.acceleration = createVector(0, 0);
         this.mass = 1;
-        this.motorPower = 1.8;
-        this.frictionCoefficient = 0.05;
+        this.motorPower = 1;
+        this.frictionCoefficient = 0.1;
         this.steeringAngle = 0;
     }
 

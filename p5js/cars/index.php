@@ -9,7 +9,7 @@
     </head>
     <body>
         <h3>Test P5</h3>
-        <div id="sketchContainer" style="width: 80%; height: 80%"></div>
+        <div id="sketchContainer" style="border: 1px solid #9aa; width: 99%; height: 400px"></div>
         <p><?php echo 'PHP is running'; ?></p>
     </body>
 </html>

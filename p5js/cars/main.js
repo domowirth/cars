@@ -2,20 +2,28 @@ let car;
 let oldPushButtonState;
 
 function setup() {
-    let canvas = createCanvas(windowWidth - 20, windowHeight * 0.75);
-    //canvas.parent('sketchContainer');
+    let canvas = createCanvas(100, 100);
+    canvas.parent('sketchContainer');
+    windowResized();
     car = new Chrysler();
     car.location.x = width / 10;
-    car.location.y = 100;
+    car.location.y = height / 2;
     oldPushButtonState = 4096;
 
     createWebSocket();
-    
+
     console.log("Setup done");
 }
 
+function windowResized() {
+    let parentDiv = document.getElementById("sketchContainer");
+    let w = parentDiv.clientWidth;
+    let h = parentDiv.clientHeight;
+    resizeCanvas(w, h);
+}
+
 function createWebSocket() {
-    
+
     let webSocket = new WebSocket("ws://192.168.1.104:80/test");
 
     webSocket.onopen = function (e) {
